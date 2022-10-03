@@ -184,22 +184,22 @@ class SQLiteSession(MemorySession):
         self._takeout_id = value
         self._update_session_table()
 
-  #  def _update_session_table(self):
-    #    c = self._cursor()
+    def _update_session_table(self):
+        c = self._cursor()
         # While we can save multiple rows into the sessions table
         # currently we only want to keep ONE as the tables don't
         # tell us which auth_key's are usable and will work. Needs
         # some more work before being able to save auth_key's for
         # multiple DCs. Probably done differently.
-  #      c.execute('delete from sessions')
-  #      c.execute('insert or replace into sessions values (?,?,?,?,?)', (
-   #         self._dc_id,
-    #        self._server_address,
-    #        self._port,
-    #        self._auth_key.key if self._auth_key else b'',
-     #       self._takeout_id
-   #     ))
-   #     c.close()
+        c.execute('delete from sessions')
+        c.execute('insert or replace into sessions values (?,?,?,?,?)', (
+            self._dc_id,
+            self._server_address,
+            self._port,
+            self._auth_key.key if self._auth_key else b'',
+            self._takeout_id
+        ))
+        c.close()
 
     def get_update_state(self, entity_id):
         row = self._execute('select pts, qts, date, seq from update_state '
